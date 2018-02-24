@@ -9,6 +9,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
+from cars.consumers import CHANNEL_GROUP_CAR
 from cars.models import Car, CAR_STATE_OCCUPIED, Trip, CAR_STATE_RESERVED, CAR_STATE_AVAILABLE
 from cars.serializers import CarSerializer, TripSerializer
 from users.models import User
@@ -52,7 +53,7 @@ class CarUnlock(generics.GenericAPIView):
     def put(self, request, car_pk, user_pk, *args, **kwargs):
         car = Car.objects.get(pk=car_pk)
         user = User.objects.get(pk=user_pk)
-        Group('carsws' + str(car_pk)).send({"text": json.dumps(UserSerializer(user).data)})
+        Group(CHANNEL_GROUP_CAR % str(car_pk)).send({"text": json.dumps(UserSerializer(user).data)})
         if not Trip.objects.filter(car=car, user_id=user_pk, endtime__isnull=True).exists():
             # no open trip for this user for this car
             raise NotFound("This car was not reserved by the user")

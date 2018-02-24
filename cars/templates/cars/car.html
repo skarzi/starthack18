@@ -3,11 +3,15 @@
 {% block content %}
 	This is a websocket testing page.
 	All messages for car #1 will appear.
+	<button onclick="newLocation()">new_location</button>
+	<button onclick="updateScore()">update_score</button>
+	<button onclick="alert('not yet implemented')">trip_end</button>
 {% endblock content %}
 
 {% block script %}
   <script>
     var socket = new WebSocket('ws://' + window.location.host + '/carsws/2');
+    var userid = 1;
 
     socket.onopen = function open() {
       console.log('WebSockets connection created.');
@@ -16,11 +20,38 @@
     socket.onmessage = function onMsg(msg) {
 		console.log(msg.data);
         var json = JSON.parse(msg.data);
+        score = json.score;
+        userid = json.user_id;
         alert("Safe driving and have fun, " + json.first_name + ".");
 	};
 
     if (socket.readyState == WebSocket.OPEN) {
       socket.onopen();
     }
+
+    var x = 51;
+    var y = 7;
+    function newLocation() {
+        x += 0.1;
+        y += 0.25;
+        var msg = JSON.stringify({
+		  type: "location_update",
+	      location: x + "," + y
+		});
+        console.log(msg);
+        socket.send(msg);
+	}
+
+	var score = 0;
+	function updateScore() {
+		score += 5;
+		var msg = JSON.stringify({
+		  type: "update_score",
+		  user_id: userid,
+	      score: score
+		});
+        console.log(msg);
+        socket.send(msg);
+	}
   </script>
 {% endblock script %}
