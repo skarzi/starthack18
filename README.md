@@ -29,3 +29,22 @@
 ## Car websocket
 All cars are kindly requested to open a websocket to `/carsws/:car_id`. Messages are sent when a user unlocks a car.
 
+### Websocket message types
+Messages over the WebSocket are in json. The following message types exist:
+
+
+| Message type | Required fields | Send by app/backend |
+| ------- | --- | ---- |
+| update_score | user_id, score | app |
+| new_location | location | app |
+| trip_end | don't know yet | app |
+| encounter | model, score | backend |
+
+Example message: 
+```json
+{
+  "type": "update_score",
+  "user_id": 1,
+  "score": 520
+  }
+```
