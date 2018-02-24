@@ -12,6 +12,7 @@ from rest_framework.response import Response
 from cars.models import Car, CAR_STATE_OCCUPIED, Trip, CAR_STATE_RESERVED, CAR_STATE_AVAILABLE
 from cars.serializers import CarSerializer, TripSerializer
 from users.models import User
+from users.serializers import UserSerializer
 
 
 class CarsList(mixins.ListModelMixin,
@@ -50,7 +51,8 @@ class CarUnlock(generics.GenericAPIView):
 
     def put(self, request, car_pk, user_pk, *args, **kwargs):
         car = Car.objects.get(pk=car_pk)
-        Group('carsws' + str(car_pk)).send({"text": json.dumps(CarSerializer(car).data)})
+        user = User.objects.get(pk=user_pk)
+        Group('carsws' + str(car_pk)).send({"text": json.dumps(UserSerializer(user).data)})
         if not Trip.objects.filter(car=car, user_id=user_pk, endtime__isnull=True).exists():
             # no open trip for this user for this car
             raise NotFound("This car was not reserved by the user")

@@ -7,7 +7,7 @@
 
 {% block script %}
   <script>
-    var socket = new WebSocket('ws://' + window.location.host + '/carsws/1');
+    var socket = new WebSocket('ws://' + window.location.host + '/carsws/2');
 
     socket.onopen = function open() {
       console.log('WebSockets connection created.');
@@ -16,7 +16,7 @@
     socket.onmessage = function onMsg(msg) {
 		console.log(msg.data);
         var json = JSON.parse(msg.data);
-        alert("Opened the doors of the " + json.model);
+        alert("Safe driving and have fun, " + json.first_name + ".");
 	};
 
     if (socket.readyState == WebSocket.OPEN) {
