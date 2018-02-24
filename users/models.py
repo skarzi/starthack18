@@ -14,7 +14,7 @@ GENDER_CHOICES = (
 
 
 class User(models.Model):
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True, editable=False)
     email = models.EmailField()
     name = models.CharField(max_length=100)
     age = models.IntegerField()
