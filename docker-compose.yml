@@ -1,0 +1,14 @@
+version: '2.1'
+
+services:
+    django_devserver:
+        build: .
+        ports:
+          - 8000:8000
+        volumes:
+          - ./db.sqlite3:/var/app/db.sqlite3
+        depends_on:
+          - redis
+
+    redis:
+        image: redis
