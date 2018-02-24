@@ -21,12 +21,14 @@
         </v-card>
       </v-form>
       <div class="text-xs-right mt-4">
-        <v-btn
-          class="white--text"
-          color="cyan"
-        >
-          Sign in
-        </v-btn>
+        <router-link to="Dashboard">
+          <v-btn
+            class="white--text"
+            color="cyan"
+          >
+            Sign in
+          </v-btn>
+        </router-link>
       </div>
     </div>
   </div>
@@ -43,5 +45,9 @@
 
   .input-group__details:before {
     background-color: #333;
+  }
+
+  a {
+    text-decoration: none;
   }
 </style>
