@@ -8,7 +8,13 @@
         map-type-id="terrain"
         class="map"
         style="width: 100%; height: 500px"
-    ></gmap-map>
+    >
+    <gmap-marker v-for="(m, index) in markers" :position="m.position"
+                   :clickable="true" :draggable="false"
+                   @click="onMarkerClick(m, index)" :icon="m.icon"
+                   :key="'marker_' + index">
+    </gmap-marker>
+    </gmap-map>
   </div>
 </template>
 
@@ -27,13 +33,17 @@ export default {
   components: {
     GAutocomplete: GAutocomplete
   },
+  methods: {
+    onMarkerClick () {
+      alert('hehe')
+    }
+  },
   computed: {
     ...mapGetters({
-      selectedPlace: 'getSelectedPlace'
+      selectedPlace: 'getSelectedPlace',
+      markers: 'getMarkers'
     }),
     currentLatLng () {
-      console.log('in current lat lng')
-      console.log(this.selectedPlace)
       return {
         lat: this.selectedPlace['lat'],
         lng: this.selectedPlace['lng']
