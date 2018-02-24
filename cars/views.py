@@ -48,3 +48,7 @@ class CarUnlock(mixins.RetrieveModelMixin,
         # todo: register somewhere who is occupying the car
         return HttpResponse("ok, unlocked " + str(pk))
 
+
+def ws_car_test(request, pk):
+    return render(request, 'cars/car.html')
+
