@@ -1,3 +1,6 @@
+import json
+
+from channels import Group
 from django.http import HttpResponse
 from django.shortcuts import render
 from rest_framework import mixins, generics
@@ -43,7 +46,7 @@ class CarUnlock(mixins.RetrieveModelMixin,
     serializer_class = CarSerializer
 
     def put(self, request, pk, *args, **kwargs):
-        # todo: have a websocket to the car here
+        Group('carsws' + str(pk)).send({"text": json.dumps(CarSerializer(Car.objects.get(pk=pk)).data)})
         # todo: set this car to 'occupied'
         # todo: register somewhere who is occupying the car
         return HttpResponse("ok, unlocked " + str(pk))

@@ -11,12 +11,11 @@ from cars.serializers import CarSerializer
 
 @channel_session
 def ws_connect(message):
+    # car is connecting
     message.reply_channel.send({"accept": True})
     label = int(message['path'].strip('/').split('/')[1])
     Group('carsws' + str(label)).add(message.reply_channel)
     car = Car.objects.get(pk=label)
-    print("SENDING " + json.dumps(CarSerializer(car).data))
-    Group('carsws' + str(label)).send({"text": json.dumps(CarSerializer(car).data)})
     message.channel_session['car_pk'] = car.pk
 
 
