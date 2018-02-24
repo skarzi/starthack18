@@ -4,6 +4,8 @@ import Entry from '@/pages/Entry'
 import Register from '@/pages/Register'
 import Signin from '@/pages/Signin'
 import Dashboard from '@/pages/Dashboard'
+import Scan from '@/pages/Scan'
+import Driving from '@/pages/Driving'
 
 Vue.use(Router)
 
@@ -28,6 +30,16 @@ export default new Router({
       path: '/dashboard',
       name: 'Dashboard',
       component: Dashboard
+    },
+    {
+      path: '/scan',
+      name: 'Scan',
+      component: Scan
+    },
+    {
+      path: '/driving',
+      name: 'Driving',
+      component: Driving
     }
   ]
 })
