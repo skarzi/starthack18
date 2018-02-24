@@ -81,6 +81,11 @@
           this.chosenCar = undefined
         }
       })
+      this.map.addMarker({
+        lat: 47.432421,
+        lng: 9.374877,
+        icon: 'http://www.myiconfinder.com/uploads/iconsets/32-32-bd14ef53b2e3d822094dbd064b9b206b-compas.png'
+      })
       axios.get('/cars/').then(resp => {
         this.cars = resp.data
         this.drawCars()
