@@ -54,8 +54,7 @@
           </v-card-text>
         </v-card>
       </v-form>
-      <v-divider class="mb-3 mt-4" color="gray"></v-divider>
-      <div class="text-xs-right">
+      <div class="text-xs-right mt-4">
         <v-btn
           class="white--text"
           color="cyan"

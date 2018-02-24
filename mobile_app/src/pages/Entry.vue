@@ -8,7 +8,9 @@
         </router-link>
       </div>
       <div>
-        <v-btn large class="auth-button">Sign In</v-btn>
+        <router-link to="Signin">
+          <v-btn large class="auth-button">Sign In</v-btn>
+        </router-link>
       </div>
     </div>
   </div>
@@ -23,6 +25,7 @@
     text-decoration: none;
     color: inherit;
   }
+
   .background {
     height: 100vh;
     background-image: url('../assets/background.png');
