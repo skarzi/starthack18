@@ -5,8 +5,15 @@ import App from './App'
 import router from './router'
 import store from './store'
 
+import axios from 'axios'
+import qs from 'qs'
+
+axios.defaults.baseURL = 'http://130.82.238.4'
+axios.defaults.paramsSerializer = function (params) {
+  return qs.stringify(params, {indices: false})
+}
+
 Vue.config.productionTip = false
-Vue.config.GOOGLE_MAPS_API_KEY = 'AIzaSyAQ_7Z1Qln1f9D70cyDKEPG4_t31kUOdrQ '
 
 /* eslint-disable no-new */
 new Vue({

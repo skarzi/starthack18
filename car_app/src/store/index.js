@@ -47,6 +47,9 @@ export default new Vuex.Store({
     setMap (state, newMap) {
       state._map = newMap
     },
+    setCars (state, newCars) {
+      state._cars = newCars
+    },
     createMarkers (state) {
       var markers = []
       markers.push({

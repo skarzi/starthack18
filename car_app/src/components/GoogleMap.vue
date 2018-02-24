@@ -4,11 +4,13 @@
 </template>
 <script>
 import { mapGetters, mapMutations } from 'vuex'
+import axios from 'axios'
 
 export default {
   name: 'GoogleMap',
   data () {
     return {
+      cars: []
     }
   },
   computed: {
@@ -20,8 +22,26 @@ export default {
   methods: {
     ...mapMutations({
       setMap: 'setMap',
+      setCars: 'setCars',
       createMarkers: 'createMarkers'
-    })
+    }),
+    getCars: function () {
+      axios.get('/cars/').then(res => {
+        var data = res.data
+        var cars = []
+        for (let car of data) {
+          var latlng = data.location.split(',').map(x => parseFloat(x))
+          cars.push({
+            'lat': latlng[0],
+            'lng': latlng[1],
+            'state': car['state'],
+            'model': car['model'],
+            'icon': car['icon']
+          })
+        }
+        return cars
+      })
+    }
   },
   mounted: function () {
     this.setMap(new GMaps({
