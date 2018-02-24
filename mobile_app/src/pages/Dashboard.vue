@@ -20,7 +20,7 @@
 
     </div>
     <v-slide-y-reverse-transition>
-      <div class="selected-car" v-if="chosenCar">
+      <div class="selected-car" v-if="chosenCar || reservedCar">
         <img :src="chosenCar.icon + '?w=100'">
         <p class="car-name">{{ chosenCar.model }}</p>
         <p class="car-capacity">
@@ -28,12 +28,26 @@
           Max. 5
         </p>
         <v-divider color="lightgray"></v-divider>
-        <p class="credit-card-info">
-          <img src="../assets/mastercard.png"> ⋯ 7638
-        </p>
-        <v-btn class="confirm-button">
+        <div class="credit-card-info">
+          <p v-if="!reservedCar">
+            <img src="../assets/mastercard.png"> ⋯ 7638
+          </p>
+          <p v-else>
+            The car will be reserved for 10 minutes.
+          </p>
+        </div>
+        <v-btn class="action-button confirm-button" @click="reserveCar"
+               v-if="!reservedCar">
           Confirm
         </v-btn>
+        <div class="action-buttons" v-else>
+          <v-btn class="action-button cancel-button" @click="cancelReservation">
+            Cancel
+          </v-btn>
+          <v-btn class="action-button scan-button">
+            Scan QR Code
+          </v-btn>
+        </div>
       </div>
     </v-slide-y-reverse-transition>
   </div>
@@ -41,6 +55,7 @@
 
 <script>
   import axios from 'axios'
+  import store from '../store'
 
   export default {
     data () {
@@ -48,6 +63,11 @@
         map: null,
         cars: [],
         chosenCar: undefined
+      }
+    },
+    computed: {
+      reservedCar () {
+        return store.state.reservedCar
       }
     },
     mounted () {
@@ -75,10 +95,20 @@
             lng: car.location.split(',')[1],
             icon: car.icon + '?w=50',
             click: e => {
-              this.chosenCar = car
+              if (!this.reservedCar) {
+                this.chosenCar = car
+              }
             }
           })
         })
+      },
+
+      reserveCar () {
+        store.commit('reserveCar', this.chosenCar)
+      },
+
+      cancelReservation () {
+        store.commit('cancelReservation')
       }
     }
   }
@@ -194,13 +224,35 @@
       }
     }
 
-    .confirm-button {
-      width: 100%;
-      color: #fff;
-      background-color: #263773;
+    .action-button {
       text-transform: none;
       font-size: 12px;
       margin: 0 0 20px;
+      box-shadow: none;
+    }
+
+    .confirm-button {
+      width: 100%;
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .cancel-button, .scan-button {
+      width: calc(50% - 5px);
+    }
+
+    .confirm-button, .scan-button {
+      color: #fff;
+      background-color: #263773;
+    }
+
+    .cancel-button {
+      border: 2px solid #263773;
+      color: #263773;
+      background-color: #fff;
     }
   }
 </style>
