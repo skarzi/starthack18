@@ -5,4 +5,4 @@ from users.models import User
 
 class UserScore(models.Model):
     user = models.OneToOneField(User, primary_key=True)
-    score = models.IntegerField()
+    score = models.FloatField()
