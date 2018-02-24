@@ -1,13 +1,9 @@
 <template>
-  <div id="app">
-    <header>
-      <span>Vue.js PWA</span>
-    </header>
-    <main>
-      <img src="./assets/logo.png" alt="Vue.js PWA">
+  <v-app id="app">
+    <v-slide-y-transition mode="out-in">
       <router-view></router-view>
-    </main>
-  </div>
+    </v-slide-y-transition>
+  </v-app>
 </template>
 
 <script>

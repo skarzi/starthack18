@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import GoogleMap from '../components/GoogleMap'
+import Entry from '../pages/Entry'
 
 Vue.use(Router)
 
@@ -9,8 +9,8 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'GoogleMap',
-      component: GoogleMap
+      name: 'Entry',
+      component: Entry
     }
   ]
 })

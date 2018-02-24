@@ -6,13 +6,16 @@ import router from './router'
 import store from './store'
 
 import axios from 'axios'
+import Vuetify from 'vuetify'
 import qs from 'qs'
+import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
 
 axios.defaults.baseURL = 'http://130.82.238.4'
 axios.defaults.paramsSerializer = function (params) {
   return qs.stringify(params, {indices: false})
 }
 
+Vue.use(Vuetify)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
