@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="dashboard-view">
     <v-toolbar dark class="dashboard-toolbar" extended>
       <div class="dashboard-background">
       </div>
@@ -19,14 +19,35 @@
     <div id="map-container">
 
     </div>
+    <v-slide-y-reverse-transition>
+      <div class="selected-car" v-if="chosenCar">
+        <img :src="chosenCar.icon + '?w=100'">
+        <p class="car-name">{{ chosenCar.model }}</p>
+        <p class="car-capacity">
+          <v-icon size="10px">person</v-icon>
+          Max. 5
+        </p>
+        <v-divider color="lightgray"></v-divider>
+        <p class="credit-card-info">
+          <img src="../assets/mastercard.png"> ⋯ 7638
+        </p>
+        <v-btn class="confirm-button">
+          Confirm
+        </v-btn>
+      </div>
+    </v-slide-y-reverse-transition>
   </div>
 </template>
 
 <script>
+  import axios from 'axios'
+
   export default {
     data () {
       return {
-        map: null
+        map: null,
+        cars: [],
+        chosenCar: undefined
       }
     },
     mounted () {
@@ -35,13 +56,40 @@
         lat: 47.432421,
         lng: 9.374877,
         zoom: 16,
-        disableDefaultUI: true
+        disableDefaultUI: true,
+        click: e => {
+          this.chosenCar = undefined
+        }
       })
+      axios.get('/cars/').then(resp => {
+        this.cars = resp.data
+        this.drawCars()
+      })
+    },
+    methods: {
+      drawCars () {
+        this.cars.forEach(car => {
+          console.log(car)
+          this.map.addMarker({
+            lat: car.location.split(',')[0],
+            lng: car.location.split(',')[1],
+            icon: car.icon + '?w=50',
+            click: e => {
+              this.chosenCar = car
+            }
+          })
+        })
+      }
     }
   }
 </script>
 
 <style lang="scss">
+
+  .dashboard-view {
+    position: relative;
+  }
+
   #map-container {
     height: calc(100vh - 112px);
   }
@@ -117,6 +165,42 @@
 
     .flex + .flex + .flex.active + .status-indicator {
       width: 100%;
+    }
+  }
+
+  .selected-car {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 20px 25px 0;
+    text-align: center;
+    background-color: #fff;
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);
+
+    .car-name {
+      margin-top: 15px;
+    }
+
+    .car-capacity {
+      font-size: 0.7em;
+    }
+
+    .credit-card-info {
+      margin-top: 10px;
+      text-align: left;
+      img {
+        vertical-align: -3px;
+        width: 30px;
+      }
+    }
+
+    .confirm-button {
+      width: 100%;
+      color: #fff;
+      background-color: #263773;
+      text-transform: none;
+      font-size: 12px;
+      margin: 0 0 20px;
     }
   }
 </style>
