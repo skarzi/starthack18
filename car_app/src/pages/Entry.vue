@@ -1,8 +1,21 @@
 <template>
-  <div class="background">
+  <div class="background" @click="goToMain()">
   </div>
 </template>
 <script>
+import router from '../router'
+
+export default {
+  data () {
+    return {
+    }
+  },
+  methods: {
+    goToMain () {
+      router.push('Main')
+    }
+  }
+}
 </script>
 <style>
 .background {

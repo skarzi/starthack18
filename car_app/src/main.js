@@ -10,7 +10,9 @@ import Vuetify from 'vuetify'
 import qs from 'qs'
 import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
 
-axios.defaults.baseURL = 'http://130.82.238.4'
+Vue.config.API_ADDRESS = '130.82.5.194:8000'
+Vue.config.CAR_ID = 1
+axios.defaults.baseURL = 'http://' + Vue.config.API_ADDRESS
 axios.defaults.paramsSerializer = function (params) {
   return qs.stringify(params, {indices: false})
 }
