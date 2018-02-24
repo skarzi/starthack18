@@ -5,7 +5,7 @@
 	All messages for car #1 will appear.
 	<button onclick="newLocation()">new_location</button>
 	<button onclick="updateScore()">update_score</button>
-	<button onclick="alert('not yet implemented')">trip_end</button>
+	<button onclick="endTrip()">trip_end</button>
 {% endblock content %}
 
 {% block script %}
@@ -49,6 +49,14 @@
 		  type: "update_score",
 		  user_id: userid,
 	      score: score
+		});
+        console.log(msg);
+        socket.send(msg);
+	}
+
+	function endTrip() {
+	    var msg = JSON.stringify({
+		  type: "end_trip"
 		});
         console.log(msg);
         socket.send(msg);

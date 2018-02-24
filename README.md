@@ -37,7 +37,7 @@ Messages over the WebSocket are in json. The following message types exist:
 | ------- | --- | ---- |
 | update_score | user_id, score | app |
 | new_location | location | app |
-| trip_end | don't know yet | app |
+| end_trip |  | app |
 | encounter | model, score | backend |
 
 Example message: 
