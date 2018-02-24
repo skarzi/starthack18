@@ -16,7 +16,7 @@ CAR_STATES = (
 class Car(models.Model):
     model = models.CharField(max_length=100)
     location = PlainLocationField(based_fields=['city'], zoom=1)
-    state = models.CharField(choices=CAR_STATES, max_length=20)
+    state = models.CharField(choices=CAR_STATES, max_length=20, default=CAR_STATE_AVAILABLE)
 
     def __str__(self):
         return "[%d] %s at %s" % (self.pk, self.model, self.location)
