@@ -60,7 +60,7 @@
 
   .dashboard-toolbar {
     position: relative;
-    background-color: #1C1A44;
+    background-color: #151E3F;
     background-image: url('../assets/volvo.png');
     background-size: auto 44px;
     background-position: center 15px;
