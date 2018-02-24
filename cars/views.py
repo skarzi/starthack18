@@ -1,7 +1,7 @@
 import json
 
 from channels import Group
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from rest_framework import mixins, generics
 from rest_framework.exceptions import APIException, NotFound
@@ -76,6 +76,19 @@ class CarReserve(mixins.RetrieveModelMixin,
         trip = Trip(user=user, car=car)
         trip.save()
         return Response(TripSerializer(trip).data)
+
+
+class CarLocation(mixins.RetrieveModelMixin,
+                     generics.GenericAPIView):
+    queryset = Car.objects.all()
+    serializer_class = CarSerializer
+
+    def put(self, request, car_pk, *args, **kwargs):
+        car = Car.objects.get(pk=car_pk)
+        data = JSONParser().parse(request)
+        car.location = data['location']
+        car.save()
+        return Response(CarSerializer(car).data)
 
 
 def ws_car_test(request, pk):

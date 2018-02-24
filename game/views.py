@@ -19,7 +19,6 @@ class UserScoresList(mixins.ListModelMixin,
 
     def put(self, request, *args, **kwargs):
         data = JSONParser().parse(request)
-        print(data)
         (score, new) = UserScore.objects.get_or_create(user_id=data['user_id'])
         score.score = data['score']
         score.save()
