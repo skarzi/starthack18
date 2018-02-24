@@ -19,6 +19,14 @@ class Car(models.Model):
     state = models.CharField(choices=CAR_STATES, max_length=20, default=CAR_STATE_AVAILABLE)
     icon = models.CharField(max_length=350)
 
+    def get_lat(self):
+        lat, lng = self.location.split(',')
+        return float(lat)
+
+    def get_lng(self):
+        lat, lng = self.location.split(',')
+        return float(lng)
+
     def __str__(self):
         return "[%d] %s at %s" % (self.pk, self.model, self.location)
 

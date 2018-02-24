@@ -3,6 +3,7 @@ from datetime import datetime
 
 from channels import Group
 from channels.sessions import channel_session
+from math import sqrt
 
 from cars.models import Car, Trip, CAR_STATE_AVAILABLE
 from game.models import UserScore
@@ -11,8 +12,11 @@ MSG_NEW_LOCATION_UPDATE = 'location_update'
 MSG_UPDATE_SCORE = 'update_score'
 MSG_TRIP_END = 'end_trip'
 MSG_ENCOUNTER = 'encounter'
+MSG_UNLOCK = 'unlock'
 
 CHANNEL_GROUP_CAR = 'carws%s'
+
+ENCOUNTER_DISTANCE = 1.0
 
 
 @channel_session
@@ -32,6 +36,22 @@ def ws_receive(message):
     if data['type'] == MSG_NEW_LOCATION_UPDATE:
         car.location = data['location']
         car.save()
+        # this is an mvp, so lets just compare all the cars
+        othercars = Car.objects.exclude(pk=car.pk)
+        for oc in othercars.all():
+            # omg, I have to do math
+            distance = sqrt(pow(oc.get_lat() - car.get_lat(), 2) + pow(oc.get_lng() - car.get_lng(), 2))
+            print(distance)
+            if distance <= ENCOUNTER_DISTANCE:
+                trip = Trip.objects.get(car=car, endtime__isnull=True)
+                (score, new) = UserScore.objects.get_or_create(pk=int(trip.user.id))
+                score.score = score.score + 0.05
+                score.save()
+                message.reply_channel.send({"text": json.dumps({
+                    'type': MSG_ENCOUNTER,
+                    'model': oc.model,
+                    'score': score.score
+                })})
         # todo: check if there are nearby cars
     elif data['type'] == MSG_UPDATE_SCORE:
         (score, new) = UserScore.objects.get_or_create(pk=int(data['user_id']))

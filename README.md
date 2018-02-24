@@ -42,6 +42,7 @@ Messages over the WebSocket are in json. The following message types exist:
 | new_location | location | app |
 | end_trip |  | app |
 | encounter | model, score | backend |
+| unlock | user | backend |
 
 Example message: 
 ```json

@@ -20,9 +20,15 @@
     socket.onmessage = function onMsg(msg) {
 		console.log(msg.data);
         var json = JSON.parse(msg.data);
-        score = json.score;
-        userid = json.user_id;
-        alert("Safe driving and have fun, " + json.first_name + ".");
+        if (json.type == "unlock") {
+            score = json.score;
+            userid = json.user_id;
+            alert("Safe driving and have fun, " + JSON.parse(json.user).first_name + ".");
+		} else if (json.type == "encounter") {
+            alert("You encountered a wild " + json.model + ". Extra points! :)")
+			score = json.score
+		}
+
 	};
 
     if (socket.readyState == WebSocket.OPEN) {
