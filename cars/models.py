@@ -1,10 +1,13 @@
 from django.db import models
 from location_field.models.plain import PlainLocationField
 
+CAR_STATE_AVAILABLE = 'available'
+CAR_STATE_RESERVER = 'reserverd'
+CAR_STATE_OCCUPIED = 'occupied'
 CAR_STATES = (
-    ('available', 'Available'),
-    ('reserved', 'Reserved'),
-    ('occupied', 'Occupied'),
+    (CAR_STATE_AVAILABLE, 'Available'),
+    (CAR_STATE_RESERVER, 'Reserved'),
+    (CAR_STATE_OCCUPIED, 'Occupied'),
 )
 
 

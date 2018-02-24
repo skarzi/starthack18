@@ -6,7 +6,7 @@ from django.shortcuts import render
 from rest_framework import mixins, generics
 from rest_framework.parsers import JSONParser
 
-from cars.models import Car
+from cars.models import Car, CAR_STATE_OCCUPIED
 from cars.serializers import CarSerializer
 
 
@@ -46,10 +46,12 @@ class CarUnlock(mixins.RetrieveModelMixin,
     serializer_class = CarSerializer
 
     def put(self, request, pk, *args, **kwargs):
-        Group('carsws' + str(pk)).send({"text": json.dumps(CarSerializer(Car.objects.get(pk=pk)).data)})
-        # todo: set this car to 'occupied'
+        car = Car.objects.get(pk=pk)
+        Group('carsws' + str(pk)).send({"text": json.dumps(CarSerializer(car).data)})
+        car.state = CAR_STATE_OCCUPIED
+        car.save()
         # todo: register somewhere who is occupying the car
-        return HttpResponse("ok, unlocked " + str(pk))
+        return self.retrieve(request, *args, **kwargs)
 
 
 def ws_car_test(request, pk):
