@@ -22,7 +22,7 @@
 | `/game/leaderboard/:nr`             | GET     |           | Get the top x of the leaderboard |
 
 [1] User JSON contains first_name, last_name, age, gender and email   
-[2] Car contains model and location (`"x,y"`)
+[2] Car contains model, location (`"x,y"`) and icon
 
 
 

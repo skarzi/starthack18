@@ -6,7 +6,7 @@ from cars.models import Car, Trip
 class CarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Car
-        fields = ('id', 'model', 'location', 'state')
+        fields = ('id', 'model', 'location', 'state', 'icon')
 
 
 class TripSerializer(serializers.ModelSerializer):
