@@ -52,7 +52,6 @@ def ws_receive(message):
                     'model': oc.model,
                     'score': score.score
                 })})
-        # todo: check if there are nearby cars
     elif data['type'] == MSG_UPDATE_SCORE:
         (score, new) = UserScore.objects.get_or_create(pk=int(data['user_id']))
         score.score = data['score']
