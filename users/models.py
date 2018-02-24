@@ -20,5 +20,11 @@ class User(models.Model):
     age = models.IntegerField()
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
 
+    def __repr__(self):
+        return "%s [%s]" % (self.name, self.email)
+
+    def __str__(self):
+        return self.__repr__()
+
     class Meta:
         ordering = ('created',)

@@ -4,10 +4,14 @@ from channels import Group
 from django.http import HttpResponse
 from django.shortcuts import render
 from rest_framework import mixins, generics
+from rest_framework.exceptions import APIException, NotFound
 from rest_framework.parsers import JSONParser
+from rest_framework.renderers import JSONRenderer
+from rest_framework.response import Response
 
-from cars.models import Car, CAR_STATE_OCCUPIED
-from cars.serializers import CarSerializer
+from cars.models import Car, CAR_STATE_OCCUPIED, Trip, CAR_STATE_RESERVED, CAR_STATE_AVAILABLE
+from cars.serializers import CarSerializer, TripSerializer
+from users.models import User
 
 
 class CarsList(mixins.ListModelMixin,
@@ -40,18 +44,36 @@ class CarDetail(mixins.RetrieveModelMixin,
         return self.destroy(request, *args, **kwargs)
 
 
-class CarUnlock(mixins.RetrieveModelMixin,
-                generics.GenericAPIView):
+class CarUnlock(generics.GenericAPIView):
     queryset = Car.objects.all()
     serializer_class = CarSerializer
 
-    def put(self, request, pk, *args, **kwargs):
-        car = Car.objects.get(pk=pk)
-        Group('carsws' + str(pk)).send({"text": json.dumps(CarSerializer(car).data)})
+    def put(self, request, car_pk, user_pk, *args, **kwargs):
+        car = Car.objects.get(pk=car_pk)
+        Group('carsws' + str(car_pk)).send({"text": json.dumps(CarSerializer(car).data)})
+        if not Trip.objects.filter(car=car, user_id=user_pk, endtime__isnull=True).exists():
+            # no open trip for this user for this car
+            raise NotFound("This car was not reserved by the user")
         car.state = CAR_STATE_OCCUPIED
         car.save()
-        # todo: register somewhere who is occupying the car
-        return self.retrieve(request, *args, **kwargs)
+        return Response(CarSerializer(car).data)
+
+
+class CarReserve(mixins.RetrieveModelMixin,
+                 generics.GenericAPIView):
+    queryset = Car.objects.all()
+    serializer_class = CarSerializer
+
+    def put(self, request, car_pk, user_pk, *args, **kwargs):
+        car = Car.objects.get(pk=car_pk)
+        user = User.objects.get(pk=user_pk)
+        if car.state != CAR_STATE_AVAILABLE:
+            raise NotFound("This car is not available")
+        car.state = CAR_STATE_RESERVED
+        car.save()
+        trip = Trip(user=user, car=car)
+        trip.save()
+        return Response(TripSerializer(trip).data)
 
 
 def ws_car_test(request, pk):
