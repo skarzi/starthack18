@@ -10,7 +10,7 @@
 
 {% block script %}
   <script>
-    var socket = new WebSocket('ws://' + window.location.host + '/carsws/2');
+    var socket = new WebSocket('ws://' + "130.82.5.194:8000" + '/carsws/1');
     var userid = 1;
 
     socket.onopen = function open() {
@@ -25,7 +25,7 @@
             userid = json.user_id;
             alert("Safe driving and have fun, " + JSON.parse(json.user).first_name + ".");
 		} else if (json.type == "encounter") {
-            alert("You encountered a wild " + json.model + ". Extra points! :)")
+            alert("You encountered a wild " + json.model + ". Extra points! :)");
 			score = json.score
 		}
 

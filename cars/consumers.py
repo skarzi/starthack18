@@ -22,6 +22,7 @@ ENCOUNTER_DISTANCE = 1.0
 @channel_session
 def ws_connect(message):
     # car is connecting
+    print("receive msg: " + str(message))
     message.reply_channel.send({"accept": True})
     label = int(message['path'].strip('/').split('/')[1])
     Group(CHANNEL_GROUP_CAR % str(label)).add(message.reply_channel)
