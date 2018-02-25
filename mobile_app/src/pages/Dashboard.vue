@@ -9,8 +9,10 @@
         <img :src="chosenCar.icon + '?w=100'">
         <p class="car-name">{{ chosenCar.model }}</p>
         <p class="car-capacity">
-          <v-icon size="10px">person</v-icon>
+          <v-icon size="14px" style="color: lightgray;">person</v-icon>
           Max. 5
+          <v-icon size="14px" style="color: lightgray; margin-left: 10px;">local_gas_station</v-icon>
+          50%
         </p>
         <v-divider color="lightgray"></v-divider>
         <div class="credit-card-info">

@@ -5,7 +5,7 @@
 <script>
   export default {
     mounted () {
-      const ws = new WebSocket('ws://localhost:8000/carsws/1/')
+      const ws = new WebSocket('ws://130.82.238.4:8000/carsws/1/')
       ws.onmessage = (event) => {
         this.$router.push({name: 'Dashboard'})
       }

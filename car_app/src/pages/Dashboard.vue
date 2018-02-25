@@ -65,8 +65,8 @@
         destination: undefined,
         panelOpen: false,
         carPosition: {
-          lat: 47.432421,
-          lng: 9.374877
+          lat: 47.431624,
+          lng: 9.376996
         },
         demoProgress: 0,
         score: 4,
@@ -74,7 +74,7 @@
       }
     },
     mounted () {
-      const ws = new WebSocket('ws://localhost:8000/carsws/1/')
+      const ws = new WebSocket('ws://130.82.238.4:8000/carsws/1/')
       ws.onmessage = (event) => {
         this.$router.push({name: 'Screensaver'})
       }

@@ -38,7 +38,7 @@
     background-size: 100% auto;
     background-color: #151E3F;
     background-position: center 160px;
-    padding-top: 420px;
+    padding-top: 360px;
     padding-left: 25px;
     padding-right: 25px;
   }
