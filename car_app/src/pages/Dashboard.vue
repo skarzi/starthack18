@@ -19,7 +19,12 @@
       <points-meter :score="3.5"></points-meter>
       <div class="notifications-panel">
         <div class="panel-header" @click="togglePanel"></div>
-        <div class="panel-content" :class="{open: panelOpen}"></div>
+        <div class="panel-content" :class="{open: panelOpen}">
+          <div class="close-panel-button" @click="togglePanel">
+            <img src="../assets/close.png">
+          </div>
+          <hello v-if="demoProgress===0"></hello>
+        </div>
       </div>
     </div>
   </div>
@@ -29,10 +34,13 @@
   import VueGoogleAutocomplete from 'vue-google-autocomplete'
   import PointsMeter from '../components/PointsMeter.vue'
 
+  import Hello from '../components/cards/Hello.vue'
+
   export default {
     components: {
       VueGoogleAutocomplete,
-      PointsMeter
+      PointsMeter,
+      Hello
     },
     data () {
       return {
@@ -42,7 +50,8 @@
         carPosition: {
           lat: 47.432421,
           lng: 9.374877
-        }
+        },
+        demoProgress: 0
       }
     },
     mounted () {
@@ -80,6 +89,9 @@
           strokeOpacity: 0.6,
           strokeWeight: 6
         })
+        setTimeout(() => {
+          this.panelOpen = true
+        }, 1200)
       }
     }
   }
@@ -167,9 +179,36 @@
     .panel-content {
       transition: height 0.3s linear;
       height: 0;
+      position: relative;
+      overflow: hidden;
 
       &.open {
-        height: 260px;
+        height: 240px;
+      }
+
+      .close-panel-button {
+        position: absolute;
+        top: 0;
+        left: 20px;
+      }
+
+      p.regular {
+        font-size: 24px;
+
+      }
+
+      .card-content {
+        padding-top: 20px;
+      }
+
+      hr.divider {
+        width: 500px;
+        margin: 20px auto;
+      }
+
+      .star-icon {
+        height: 30px;
+        vertical-align: -8px;
       }
     }
   }
