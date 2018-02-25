@@ -36,6 +36,7 @@
 </template>
 
 <script>
+  import axios from 'axios'
   import store from '../store'
   import statusBar from '../components/StatusBar.vue'
 
@@ -50,6 +51,10 @@
     },
     methods: {
       finish () {
+        axios.put(`/cars/unlock/${this.car.id}/1/`).then(resp => {
+          console.log(resp)
+          this.$router.push({name: 'Driving'})
+        })
         store.commit('cancelReservation')
         this.$router.push({name: 'Dashboard'})
       }

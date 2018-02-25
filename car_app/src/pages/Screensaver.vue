@@ -3,7 +3,14 @@
 </template>
 
 <script>
-  export default {}
+  export default {
+    mounted () {
+      const ws = new WebSocket('ws://localhost:8000/carsws/1/')
+      ws.onmessage = (event) => {
+        this.$router.push({name: 'Dashboard'})
+      }
+    }
+  }
 </script>
 
 <style lang="scss">

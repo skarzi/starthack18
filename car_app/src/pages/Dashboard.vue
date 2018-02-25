@@ -74,6 +74,10 @@
       }
     },
     mounted () {
+      const ws = new WebSocket('ws://localhost:8000/carsws/1/')
+      ws.onmessage = (event) => {
+        this.$router.push({name: 'Screensaver'})
+      }
       this.map = new GMaps({
         div: '#map-container',
         lat: this.carPosition.lat,
