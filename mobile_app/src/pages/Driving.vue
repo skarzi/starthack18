@@ -6,7 +6,7 @@
       Now take a look at the monitor screen.<br>
       Drive safe and have fun.
     </p>
-    <v-btn class="finish-button">
+    <v-btn class="finish-button" to="Leaderboard">
       Trip finished?
     </v-btn>
   </div>

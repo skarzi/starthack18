@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    reservedCar: undefined
+    reservedCar: undefined,
+    clientPosition: undefined
   },
   mutations: {
     reserveCar (state, car) {

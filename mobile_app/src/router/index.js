@@ -6,6 +6,8 @@ import Signin from '@/pages/Signin'
 import Dashboard from '@/pages/Dashboard'
 import Scan from '@/pages/Scan'
 import Driving from '@/pages/Driving'
+import Leaderboard from '@/pages/Leaderboard'
+import Payment from '@/pages/Payment'
 
 Vue.use(Router)
 
@@ -40,6 +42,16 @@ export default new Router({
       path: '/driving',
       name: 'Driving',
       component: Driving
+    },
+    {
+      path: '/leaderboard',
+      name: 'Leaderboard',
+      component: Leaderboard
+    },
+    {
+      path: '/payment',
+      name: 'Payment',
+      component: Payment
     }
   ]
 })
