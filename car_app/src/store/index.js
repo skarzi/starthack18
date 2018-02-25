@@ -3,12 +3,15 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+const SOURCE_ICON = 'https://i.imgur.com/jzJxuAI.png'
+
 function _getCurrentLocation () {
   var location = {
     'lat': 47.4244818,
     'lng': 9.376717299999996,
     'id': '0',
-    'formatted_address': 'Your Location'
+    'formatted_address': 'Your Location',
+    'icon': SOURCE_ICON
   }
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -16,7 +19,8 @@ function _getCurrentLocation () {
         lat: position.coords.latitude,
         lng: position.coords.longitude,
         'id': '0',
-        'formatted_address': 'Your Location'
+        'formatted_address': 'Your Location',
+        'icon': SOURCE_ICON
       }
     }, function () {
       alert('GEO LOCATION ERROR')
@@ -40,7 +44,7 @@ export default new Vuex.Store({
       return state._source
     },
     getTarget (state) {
-      return state._target
+      return state._target === undefined ? {'formatted_address': ''} : state._target
     }
   },
   mutations: {

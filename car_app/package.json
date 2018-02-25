@@ -17,6 +17,7 @@
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vuetify": "^1.0.3",
+    "vuetify-google-autocomplete": "^2.0.0-Alpha.5",
     "vuex": "^3.0.1",
     "ws": "^4.1.0"
   },

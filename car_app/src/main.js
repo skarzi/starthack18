@@ -7,18 +7,21 @@ import store from './store'
 
 import axios from 'axios'
 import Vuetify from 'vuetify'
+import VuetifyGoogleAutocomplete from 'vuetify-google-autocomplete'
 import qs from 'qs'
 import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
 
 Vue.config.API_ADDRESS = '130.82.5.194:8000'
-Vue.config.CAR_ID = 1
+Vue.config.productionTip = false
+
 axios.defaults.baseURL = 'http://' + Vue.config.API_ADDRESS
 axios.defaults.paramsSerializer = function (params) {
   return qs.stringify(params, {indices: false})
 }
 
 Vue.use(Vuetify)
-Vue.config.productionTip = false
+Vue.use(VuetifyGoogleAutocomplete, {
+})
 
 /* eslint-disable no-new */
 new Vue({

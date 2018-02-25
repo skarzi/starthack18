@@ -48,7 +48,8 @@ export default {
     this.setMap(new GMaps({
       div: '#map',
       lat: this.source['lat'],
-      lng: this.source['lng']
+      lng: this.source['lng'],
+      disableDefaultUI: true
     }))
     this.createMarkers()
   }
