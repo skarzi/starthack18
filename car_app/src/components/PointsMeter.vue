@@ -27,6 +27,7 @@
       bottom: calc(100% + 10px);
       transform: translateX(-50%);
       text-shadow: 2px 2px #d0d0d0;
+      transition: all 0.4s linear;
     }
 
     .meter-slot {
@@ -52,6 +53,7 @@
       overflow: hidden;
       z-index: 999;
       position: absolute;
+      transition: all 0.4s linear;
     }
 
     .meter-bar {
