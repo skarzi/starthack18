@@ -13,6 +13,7 @@ MSG_UPDATE_SCORE = 'update_score'
 MSG_TRIP_END = 'end_trip'
 MSG_ENCOUNTER = 'encounter'
 MSG_UNLOCK = 'unlock'
+MSG_LOCK = 'lock'
 
 CHANNEL_GROUP_CAR = 'carws%s'
 

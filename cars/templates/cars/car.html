@@ -27,6 +27,8 @@
 		} else if (json.type == "encounter") {
             alert("You encountered a wild " + json.model + ". Extra points! :)");
 			score = json.score
+		} else if (json.type == "lock") {
+            alert("The car is now locked.")
 		}
 
 	};

@@ -18,6 +18,7 @@
 | `/cars/:id`                | GET      |                     | Returns car object |
 | `/cars/:id`                | DELETE   |                     | Delete car object |
 | `/cars/unlock/:car/:user`  | PUT   |                     | Unlock a car |
+| `/cars/lock/:car/:user`  | PUT   |                     | Lock a car |
 | `/cars/reserve/:car/:user`  | PUT   |                     | Reserve a car | 
 | | | | |
 | `/game/scores`                    | GET     |        | Get all user scores |
@@ -43,6 +44,7 @@ Messages over the WebSocket are in json. The following message types exist:
 | end_trip |  | app |
 | encounter | model, score | backend |
 | unlock | user | backend |
+| lock | | backend |
 
 Example message: 
 ```json

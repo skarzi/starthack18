@@ -7,7 +7,7 @@ from rest_framework.exceptions import NotFound
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 
-from cars.consumers import CHANNEL_GROUP_CAR, MSG_UNLOCK
+from cars.consumers import CHANNEL_GROUP_CAR, MSG_UNLOCK, MSG_LOCK
 from cars.models import Car, CAR_STATE_OCCUPIED, Trip, CAR_STATE_RESERVED, CAR_STATE_AVAILABLE
 from cars.serializers import CarSerializer, TripSerializer
 from users.models import User
@@ -60,6 +60,21 @@ class CarUnlock(generics.GenericAPIView):
             raise NotFound("This car was not reserved by the user")
         car.state = CAR_STATE_OCCUPIED
         car.save()
+        return Response(CarSerializer(car).data)
+
+
+class CarLock(generics.GenericAPIView):
+    queryset = Car.objects.all()
+    serializer_class = CarSerializer
+
+    def put(self, request, car_pk, user_pk, *args, **kwargs):
+        car = Car.objects.get(pk=car_pk)
+        if Trip.objects.filter(car=car, endtime__isnull=True).exclude(user_id=user_pk).exists():
+            # Other user has reserved the car
+            raise NotFound("This car is not reserved by the current user")
+        Group(CHANNEL_GROUP_CAR % str(car.pk)).send({"text": json.dumps({
+            'type': MSG_LOCK
+        })})
         return Response(CarSerializer(car).data)
 
 
